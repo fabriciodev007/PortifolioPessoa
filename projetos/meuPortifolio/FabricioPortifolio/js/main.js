@@ -1,10 +1,4 @@
-/**
-* Template Name: iPortfolio
-* Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-* Updated: Jun 29 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+
 
 (function() {
   "use strict";
@@ -203,9 +197,37 @@
       }
     }
   });
+  /** Cálculo automático da idade */
+  window.addEventListener('load', function() {
+    const dataNascimento = document.getElementById('dataNascimento');
+    const resultadoIdade = document.getElementById('resultado');
+    if (!dataNascimento || !resultadoIdade) return;
+
+    const partes = dataNascimento.textContent.trim().split(/[-/]/).map(Number);
+    if (partes.length !== 3 || partes.some(Number.isNaN)) return;
+
+    const [dia, mes, ano] = partes;
+    const nascimento = new Date(ano, mes - 1, dia);
+    if (
+      nascimento.getFullYear() !== ano ||
+      nascimento.getMonth() !== mes - 1 ||
+      nascimento.getDate() !== dia
+    ) return;
+
+    const hoje = new Date();
+    let idade = hoje.getFullYear() - ano;
+    if (
+      hoje.getMonth() < mes - 1 ||
+      (hoje.getMonth() === mes - 1 && hoje.getDate() < dia)
+    ) {
+      idade--;
+    }
+
+    resultadoIdade.textContent = idade;
+  });
 
   /**
-   * Navmenu Scrollspy
+   * Navmenu 
    */
   let navmenulinks = document.querySelectorAll('.navmenu a');
 
